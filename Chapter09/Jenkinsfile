@@ -1,0 +1,20 @@
+pipeline {
+    agent any
+    
+    stages {
+        stage('Build') {
+            steps {
+                dir('Chapter09/sample1') {
+                    sh 'mvn package'
+                }
+            }
+        }
+        stage('Deploy') {
+            steps {
+                dir('Chapter09/sample3') {
+                    sh 'docker-compose -f calculator.yaml -f hazelcast.yaml up -d'
+                }
+            }
+        }
+    }
+}
